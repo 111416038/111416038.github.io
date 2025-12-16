@@ -1,198 +1,223 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="zh-Hant">
-<!-- 調整作品集（gallery）照片大小與展示 -->
-<style>
-/* 提升 gallery 卡片圖片高度，並確保裁切與響應式行為 */
-section.gallery .grid { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)) !important; gap:14px !important; }
-section.gallery .card img { width:100% !important; height:260px !important; object-fit:cover !important; display:block !important; }
-
-/* 大螢幕時讓照片更高以強調作品集 */
-@media (min-width:900px){
-    section.gallery .grid { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important; }
-    section.gallery .card img { height:320px !important; }
-}
-</style>
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>系籃社 - 歡迎加入</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>期末整合</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lora:wght@400;500&display=swap" rel="stylesheet">
     <style>
-        :root{
-            --accent:#ff6b35;
-            --dark:#0f1724;
-            --muted:#6b7280;
-            --bg:#0f172430;
-            --card:#ffffff;
-            --maxw:1100px;
-            font-family: system-ui, -apple-system, "Segoe UI", Roboto, "思源黑體", "Noto Sans TC", "Helvetica Neue", Arial;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        *{box-sizing:border-box}
-        body{
-            margin:0;
-            color:var(--dark);
-            background:linear-gradient(180deg,#f8fafc, #eef2f7);
-            -webkit-font-smoothing:antialiased;
-            -moz-osx-font-smoothing:grayscale;
+        
+        body {
+            font-family: 'Lora', serif;
+            color: #2a2a2a;
+            line-height: 1.8;
+            background: #0f0f0f;
         }
-        .container{max-width:var(--maxw);margin:0 auto;padding:24px;}
-        header.site-banner{
-            display:grid;
-            grid-template-columns:1fr;
-            align-items:center;
-            gap:18px;
-            background:linear-gradient(90deg,#111827 0%, #0b1220 60%);
-            color:#fff;
-            padding:40px 24px;
-            border-radius:12px;
-            overflow:hidden;
-            position:relative;
+        
+        section {
+            padding: 80px 40px;
         }
-        header .banner-inner{display:flex;gap:24px;align-items:center;flex-wrap:wrap}
-        .banner-text{max-width:640px}
-        .badge{display:inline-block;background:rgba(255,255,255,0.08);padding:6px 10px;border-radius:999px;font-size:13px}
-        h1{margin:8px 0 6px;font-size:28px;line-height:1.1}
-        p.lead{margin:0;color:#e6eef9;opacity:0.95}
-        .cta{
-            margin-top:14px;
-            display:inline-block;
-            background:var(--accent);
-            color:#fff;
-            padding:10px 16px;
-            border-radius:8px;
-            text-decoration:none;
-            font-weight:600;
-            box-shadow:0 6px 18px rgba(255,107,53,0.18);
+        
+        /* Banner */
+        .banner {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: #e8d5c4;
+            text-align: center;
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.5);
         }
-
-        .banner-photo{
-            width:280px;
-            min-width:200px;
-            border-radius:10px;
-            overflow:hidden;
-            box-shadow:0 8px 30px rgba(2,6,23,0.35);
-            border:4px solid rgba(255,255,255,0.06);
-            background:#333;
+        
+        .banner h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
         }
-        .banner-photo img{display:block;width:100%;height:auto;object-fit:cover;}
-
-        /* Intro */
-        section.intro{margin-top:24px;background:var(--card);padding:20px;border-radius:10px;box-shadow:0 6px 18px rgba(15,23,36,0.06)}
-        section.intro h2{margin:0 0 8px;font-size:20px}
-        section.intro p{margin:0;color:var(--muted)}
-
-        /* Portfolio */
-        section.gallery{margin-top:18px}
-        section.gallery h2{margin-bottom:12px}
-        .grid{
-            display:grid;
-            grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-            gap:12px;
+        
+        .banner p {
+            font-size: 1.2rem;
+            font-weight: 400;
+            opacity: 0.85;
+            letter-spacing: 1.5px;
         }
-        .card{
-            background:#fff;border-radius:10px;overflow:hidden;border:1px solid #f1f5f9;
-            box-shadow:0 8px 20px rgba(2,6,23,0.04);
+        
+        /* 個人簡介 */
+        .intro {
+            background: #1a1a1a;
+            text-align: center;
+            border-top: 1px solid #333;
         }
-        .card img{width:100%;height:160px;object-fit:cover;display:block}
-        .card .meta{padding:12px}
-        .card .meta h3{margin:0 0 6px;font-size:16px}
-        .card .meta p{margin:0;color:var(--muted);font-size:14px}
-
-        /* Footer / contact */
-        footer.site-footer{margin-top:22px;padding:18px;border-radius:10px;background:linear-gradient(90deg,#fff,#fbfbfd);display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
-        .contacts{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
-        .contact-item{background:var(--bg);padding:8px 12px;border-radius:8px;color:var(--dark);font-size:14px;text-decoration:none}
-        .small{font-size:13px;color:var(--muted);margin-top:6px}
-
-        @media(min-width:900px){
-            header.site-banner{grid-template-columns:1fr 360px}
-            .banner-inner{flex-direction:column;align-items:flex-start}
+        
+        .intro h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 40px;
+            letter-spacing: 2px;
+            color: #d4af37;
+        }
+        
+        .intro p {
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto;
+            color: #c0b0a0;
+            line-height: 1.9;
+        }
+        
+        /* 作品集 */
+        .portfolio {
+            background: #0f0f0f;
+            border-top: 1px solid #333;
+        }
+        
+        .portfolio h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 60px;
+            text-align: center;
+            letter-spacing: 2px;
+            color: #d4af37;
+        }
+        
+        .projects {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .project-item {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            padding: 30px;
+            text-align: center;
+            border: 1px solid #333;
+            transition: all 0.3s ease;
+        }
+        
+        .project-item:hover {
+            border-color: #d4af37;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+        }
+        
+        .project-item h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #d4af37;
+        }
+        
+        .project-item p {
+            font-size: 0.95rem;
+            color: #a0968d;
+            line-height: 1.8;
+        }
+        
+        .learnings {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            padding: 40px;
+            text-align: center;
+            margin-top: 40px;
+            border: 1px solid #333;
+        }
+        
+        .learnings h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #d4af37;
+        }
+        
+        .learnings p {
+            max-width: 700px;
+            margin: 0 auto;
+            color: #a0968d;
+        }
+        
+        /* 收尾 */
+        .closing {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: #e8d5c4;
+            text-align: center;
+            box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.5);
+        }
+        
+        .closing h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+            letter-spacing: 2px;
+            color: #d4af37;
+        }
+        
+        .closing p {
+            font-size: 1.1rem;
+            font-weight: 400;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.9;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header class="site-banner" role="banner" aria-label="系籃歡迎橫幅">
-            <div class="banner-inner">
-                <div class="banner-text">
-                    <span class="badge">系籃招新</span>
-                    <h1>歡迎大家加入系籃！</h1>
-                    <p class="lead">系上的籃球隊歡迎所有喜愛運動與團隊合作的你。一起練球、一起比賽，也一起拍帥氣照片留回憶！</p>
-                    <a class="cta" href="#contact">加入我們</a>
-                </div>
+    <!-- Banner -->
+    <section class="banner">
+        <div>
+            <h1>個人成果發表</h1>
+            <p>2025 學年成果展示</p>
+        </div>
+    </section>
+    
+    <!-- 個人簡介 -->
+    <section class="intro">
+        <h2>對這堂課的期待</h2>
+        <p>希望能透過這堂課學習到高中不會教的內容，且熟悉如何架設一個網站。</p>
+    </section>
+    
+    <!-- 作品集 -->
+    <section class="portfolio">
+        <h2>作品集</h2>
+        <div class="projects">
+            <div class="project-item">
+                <img src="1.png" alt="專案 1 圖片" style="width: 100%; height: 200px; object-fit: cover; margin-bottom: 15px;">
+                <h3>專案 1:做一個自己的名片</h3>
+                <p>這份作業讓我感覺終於能從學校學習到對自己有實質幫助的東西，以前都在學習課本的內容也不知道到底能為自己做些甚麼。</p>
             </div>
-
-            <div class="banner-photo" aria-hidden="true">
-                <!-- 可替換為 /images/team.jpg -->
-                <img src="https://via.placeholder.com/560x420.png?text=%E7%B3%BB%E7%B1%83+%E5%B8%B6%E5%90%8C%E5%AD%B8%E6%8B%8D%E7%85%A7" alt="系籃帥哥一起拍照的合照示意">
+            <div class="project-item">
+                <img src="3.png" alt="專案 2 圖片" style="width: 100%; height: 200px; object-fit: cover; margin-bottom: 15px;">
+                <h3>專案 2 :唐詩三百首</h3>
+                <p>這是老師讓我們探索設計網頁的前期作品，可能思想被固定太久老師說要畫出一個唐詩的水墨畫的時候我還一頭霧水。老師說完我才想起來我們可以運用ai幫我們畫......</p>
             </div>
-        </header>
-
-        <section class="intro" id="intro" aria-labelledby="intro-title">
-            <h2 id="intro-title">簡介 — 我們的風格與訓練</h2>
-            <p>系籃以輕鬆且有效率的練習為主，歡迎所有程度的同學參加。每週例行練球 2 次（基本技巧 + 戰術演練），也會參與校內外友誼賽與系際活動。加入後會有資深隊員帶練，並依個人程度安排進階訓練。</p>
-            <div class="small">重點：團隊合作、基本體能、投籃與防守練習、比賽經驗。</div>
-        </section>
-
-        <section class="gallery" aria-labelledby="gallery-title">
-            <h2 id="gallery-title">作品集與去年活動回顧</h2>
-            <div class="grid">
-                <article class="card">
-                    <img src="https://via.placeholder.com/600x400.png?text=%E5%8E%9F%E5%B9%B4%E6%8A%80%E8%83%BD%E8%A8%93%E7%B7%B4" alt="去年訓練照片示意">
-                    <div class="meta">
-                        <h3>訓練日常</h3>
-                        <p>基本訓練與合練花絮，包含投籃、突破及防守練習。</p>
-                    </div>
-                </article>
-
-                <article class="card">
-                    <img src="https://via.placeholder.com/600x400.png?text=%E7%8D%8E%E7%8A%B6%E6%88%90%E5%8A%9F" alt="比賽精彩瞬間">
-                    <div class="meta">
-                        <h3>比賽精彩瞬間</h3>
-                        <p>去年友誼賽精彩鏡頭與頒獎合照，隊友情誼滿滿。</p>
-                    </div>
-                </article>
-
-                <article class="card">
-                    <img src="https://via.placeholder.com/600x400.png?text=%E7%8D%8E%E7%8A%B6%E7%85%A7%E7%89%87" alt="活動合照">
-                    <div class="meta">
-                        <h3>活動回顧</h3>
-                        <p>系籃舉辦的系內活動與聚餐，歡樂與團隊精神。</p>
-                    </div>
-                </article>
-
-                <article class="card">
-                    <img src="https://via.placeholder.com/600x400.png?text=%E5%8F%8B%E8%AA%8C%E8%B3%BD%E8%AA%BF%E6%9F%A5" alt="友誼賽合影示意">
-                    <div class="meta">
-                        <h3>友誼賽與外派</h3>
-                        <p>參與校際友誼賽，累積實戰經驗與默契。</p>
-                    </div>
-                </article>
+            <div class="project-item">
+                <img src="2.png" alt="專案 3 圖片" style="width: 100%; height: 200px; object-fit: cover; margin-bottom: 15px;">
+                <h3>專案 3:為一個比賽架設網站</h3>
+                <p>這大概是一個學期的成果驗收，我做完都很有成就感，自己也是一個有能力架設網站的人了!!</p>
             </div>
-        </section>
-
-        <footer class="site-footer" id="contact" aria-label="聯絡資訊">
-            <div>
-                <strong>想加入或詢問？</strong>
-                <div class="small">歡迎透過下列方式聯絡我們，或直接加入 LINE 群組了解最新消息。</div>
-            </div>
-
-            <div class="contacts" role="navigation" aria-label="聯絡方式">
-                <a class="contact-item" href="mailto:team@example.com">Email: team@example.com</a>
-                <a class="contact-item" href="https://line.me/ti/g/XXXXXXXX" target="_blank" rel="noopener">LINE 群組（點我加入）</a>
-                <a class="contact-item" href="#" onclick="alert('負責人：張同學\n電話：09xx-xxx-xxx');return false;">聯絡人資訊</a>
-            </div>
-        </footer>
-
-    </div>
-
-    <script>
-        // 小功能：快速滾動到聯絡區塊（按 CTA）
-        document.querySelectorAll('.cta').forEach(btn=>{
-            btn.addEventListener('click', (e)=>{
-                e.preventDefault();
-                document.querySelector('#contact').scrollIntoView({behavior:'smooth'});
-            });
-        });
-    </script>
+        </div>
+        <div class="learnings">
+            <h3>這學期學到的東西</h3>
+            <p>列舉本學期學習的主要技能與知識：網頁設計、製作名片、學習運用ai等核心能力</p>
+        </div>
+    </section>
+    
+    <!-- 收尾 -->
+    <section class="closing">
+        <h2>期末心得</h2>
+        <p>這個學期有挑戰也有成長。透過各個專案的實踐，我不僅獲得了技術上的進步，也學會了團隊合作與問題解決的能力。透過這個課程我受益良多，感謝所有的指導。</p>
+    </section>
 </body>
-</html></article></div></article>
+</html>
